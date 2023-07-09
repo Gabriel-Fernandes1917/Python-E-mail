@@ -22,11 +22,20 @@ menssagem["From"] = email_origem
 menssagem["To"] = email_destino
 menssagem["Subject"] = assunto
 
+anexo_path = "Mapa de stakeholders Rama T.I.xlsx"
+mime_type, mime_subtype = mimetypes.guess_type(anexo_path)[0].split("/")
 
-menssagem.set_content(body)
+menssagem.set_content(body, subtype='html') #subtype add param to permit read code how HTML
 
 # ssl crypt
 safe = ssl.create_default_context()
+
+
+with open(anexo_path, 'rb') as ap:
+    menssagem.add_alternative(ap.read(), maintype=mime_type,
+                              subtype=mime_subtype, filename=anexo_path)
+
+
 
 #with open and close one connection, the pythom
 #with outher service
